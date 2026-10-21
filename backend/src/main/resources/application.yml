@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: ${POSTGRESQL_CONNECTION}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        "[format_sql]": true
+
+# AWS / S3 Configuration Block
+aws:
+  s3:
+    endpoint-url: ${AWS_ENDPOINT_URL_S3}
+    access-key-id: ${AWS_ACCESS_KEY_ID}
+    secret-access-key: ${AWS_SECRET_ACCESS_KEY}
+    region: ${AWS_REGION:ap-southeast-1}
