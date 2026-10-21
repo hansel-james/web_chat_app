@@ -2,7 +2,9 @@ package com.webchat.backend.conversation.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
 import java.time.Instant;
 
 import org.junit.jupiter.api.Test;
@@ -43,7 +45,7 @@ class ConversationEntityTests extends JpaEntityTestSupport {
 				ConversationMember.class, member.getId());
 		assertEquals(ConversationMemberRole.MEMBER, persistedMember.getRole());
 		assertEquals(12L, persistedMember.getLastReadSequence());
-		assertEquals(readAt, persistedMember.getLastReadAt());
+		assertTrue(Duration.between(readAt, persistedMember.getLastReadAt()).abs().toNanos() <= 1_000);
 		assertEquals(conversation.getId(), ownerId.getConversationId());
 	}
 

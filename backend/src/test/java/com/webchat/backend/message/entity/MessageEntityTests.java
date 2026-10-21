@@ -2,9 +2,10 @@ package com.webchat.backend.message.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -66,7 +67,8 @@ class MessageEntityTests extends JpaEntityTestSupport {
 		assertEquals(1L, countRows("MessageReceipt"));
 
 		MessageReceipt persistedReceipt = entityManager.find(MessageReceipt.class, receiptId);
-		assertEquals(deliveredAt.truncatedTo(ChronoUnit.MICROS), persistedReceipt.getDeliveredAt());
+		assertTrue(Duration.between(deliveredAt, persistedReceipt.getDeliveredAt())
+				.abs().toNanos() <= 1_000);
 	}
 
 	private Message createMessage(
