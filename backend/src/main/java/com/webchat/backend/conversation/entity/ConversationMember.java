@@ -63,4 +63,7 @@ public class ConversationMember {
 
     @Column(name = "last_read_at")
     private Instant lastReadAt;
+
+    @Column(name = "read_receipts_enabled", nullable = false)
+    private boolean readReceiptsEnabled = true;
 }

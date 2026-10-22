@@ -21,6 +21,7 @@ class ConversationEntityTests extends JpaEntityTestSupport {
 		AppUser owner = persistUser("owner");
 		AppUser memberUser = persistUser("member");
 		Conversation conversation = persistConversation(owner, ConversationType.GROUP);
+		conversation.setDirectPairKey(null);
 		Instant readAt = Instant.now();
 
 		ConversationMember ownerMember = createMember(
@@ -29,6 +30,7 @@ class ConversationEntityTests extends JpaEntityTestSupport {
 				conversation, memberUser, ConversationMemberRole.MEMBER);
 		member.setLastReadSequence(12L);
 		member.setLastReadAt(readAt);
+		member.setReadReceiptsEnabled(false);
 
 		entityManager.persist(ownerMember);
 		entityManager.persist(member);
@@ -46,6 +48,7 @@ class ConversationEntityTests extends JpaEntityTestSupport {
 		assertEquals(ConversationMemberRole.MEMBER, persistedMember.getRole());
 		assertEquals(12L, persistedMember.getLastReadSequence());
 		assertTrue(Duration.between(readAt, persistedMember.getLastReadAt()).abs().toNanos() <= 1_000);
+		assertEquals(false, persistedMember.isReadReceiptsEnabled());
 		assertEquals(conversation.getId(), ownerId.getConversationId());
 	}
 

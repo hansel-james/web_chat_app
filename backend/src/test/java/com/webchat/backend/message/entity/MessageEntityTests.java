@@ -23,7 +23,7 @@ class MessageEntityTests extends JpaEntityTestSupport {
 	void persistsMessagesRepliesAttachmentsAndReceipts() {
 		AppUser sender = persistUser("sender");
 		AppUser recipient = persistUser("recipient");
-		Conversation conversation = persistConversation(sender, ConversationType.DIRECT);
+		Conversation conversation = persistDirectConversation(sender, recipient);
 
 		Message message = createMessage(conversation, sender, 1, "Hello");
 		entityManager.persist(message);

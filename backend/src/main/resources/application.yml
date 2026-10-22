@@ -1,20 +1,22 @@
 spring:
+  config:
+    import: optional:file:.env[.properties]
   datasource:
-    url: ${POSTGRESQL_CONNECTION}
+    url: "${POSTGRESQL_CONNECTION:jdbc:postgresql://localhost:5432/webchat}"
+    username: ${POSTGRESQL_USERNAME:webchat}
+    password: ${POSTGRESQL_PASSWORD:local-dev-password}
     driver-class-name: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        "[format_sql]": true
+      ddl-auto: validate
+    show-sql: false
+  flyway:
+    enabled: ${FLYWAY_ENABLED:false}
 
 # AWS / S3 Configuration Block
 aws:
   s3:
-    endpoint-url: ${AWS_ENDPOINT_URL_S3}
-    access-key-id: ${AWS_ACCESS_KEY_ID}
-    secret-access-key: ${AWS_SECRET_ACCESS_KEY}
+    endpoint-url: ${AWS_ENDPOINT_URL_S3:http://localhost:9000}
+    access-key-id: ${AWS_ACCESS_KEY_ID:local}
+    secret-access-key: ${AWS_SECRET_ACCESS_KEY:local}
     region: ${AWS_REGION:ap-southeast-1}

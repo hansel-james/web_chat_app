@@ -20,6 +20,7 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,8 @@ import lombok.Setter;
 @Entity
 @Table(name = "conversations", indexes = {
         @Index(name = "ix_conversations_created_by", columnList = "created_by")
+}, uniqueConstraints = {
+        @UniqueConstraint(name = "ux_conversations_direct_pair", columnNames = "direct_pair_key")
 })
 @Getter
 @Setter
@@ -43,6 +46,9 @@ public class Conversation {
 
     @Column(length = 200)
     private String title;
+
+    @Column(name = "direct_pair_key", length = 64)
+    private String directPairKey;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "created_by", nullable = false)

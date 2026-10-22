@@ -22,7 +22,7 @@ class NotificationEntityTests extends JpaEntityTestSupport {
 	void persistsUnreadNotificationWithConversationAndMessageReferences() {
 		AppUser sender = persistUser("sender");
 		AppUser recipient = persistUser("recipient");
-		Conversation conversation = persistConversation(sender, ConversationType.DIRECT);
+		Conversation conversation = persistDirectConversation(sender, recipient);
 
 		Message message = new Message();
 		message.setConversation(conversation);
