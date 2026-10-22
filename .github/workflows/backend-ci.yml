@@ -12,6 +12,28 @@ jobs:
   build-and-test:
     name: Build and test backend
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: webchat_test
+          POSTGRES_USER: webchat_test
+          POSTGRES_PASSWORD: webchat_test_password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U webchat_test -d webchat_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      TEST_DATABASE_URL: jdbc:postgresql://localhost:5432/webchat_test
+      TEST_DATABASE_USERNAME: webchat_test
+      TEST_DATABASE_PASSWORD: webchat_test_password
+      TEST_DATABASE_DRIVER: org.postgresql.Driver
+      TEST_DATABASE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      TEST_HIBERNATE_DDL_AUTO: validate
+      TEST_FLYWAY_ENABLED: true
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -34,3 +56,25 @@ jobs:
           name: backend-jar
           path: backend/target/backend-*.jar
           if-no-files-found: error
+
+  build-frontend:
+    name: Build frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
