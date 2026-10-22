@@ -1,33 +1,86 @@
-HELP.md
+# =========================================================================
+# Java & Spring Boot Core
+# =========================================================================
+*.class
+*.log
+*.jar
+*.war
+*.ear
+*.tar.gz
+hs_err_pid*
+replay_pid*
+
+# =========================================================================
+# Build Tools (Maven & Gradle)
+# =========================================================================
+# Maven
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/.search
+.flattened-pom.xml
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
 
-### IntelliJ IDEA ###
-.idea
-*.iws
+# =========================================================================
+# IDE Settings
+# =========================================================================
+# IntelliJ IDEA
+.idea/
 *.iml
 *.ipr
+*.iws
+out/
 
-### NetBeans ###
+# Eclipse / Spring Tool Suite (STS)
+.metadata/
+.classpath
+.project
+.settings/
+.factorypath
+.springBeans/
+.sts4-cache/
+*.launch
+
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# Visual Studio Code (VS Code)
 .vscode/
+
+# =========================================================================
+# Configuration & Environment (Security)
+# =========================================================================
+# Avoid committing passwords, API keys, or local database credentials
+.env
+.env.local
+application-local.properties
+application-local.yml
+application-dev.properties
+application-dev.yml
+
+# =========================================================================
+# Operating System Files
+# =========================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
